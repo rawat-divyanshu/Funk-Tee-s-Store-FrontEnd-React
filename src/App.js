@@ -1,16 +1,12 @@
 import React from "react";
 import "./App.css";
 import "./tailwind.output.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Cart from "./components/Cart";
+import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   return (
     <React.Fragment>
-      <Navbar />
-      <Cart />
-      <Footer />
+      <AdminDashboard />
     </React.Fragment>
   );
 }
