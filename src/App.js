@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
 import "./tailwind.output.css";
-import AdminDashboard from "./components/AdminDashboard";
+import Home from "./core/Home";
 
 function App() {
   return (
     <React.Fragment>
-      <AdminDashboard />
+      <Home />
     </React.Fragment>
   );
 }

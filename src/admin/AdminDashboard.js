@@ -1,6 +1,6 @@
 import React from "react";
-import CollectionsPage from "./CollectionsPage";
-import Footer from "./Footer";
+import CollectionsPage from "../Other Components/CollectionsPage";
+import Footer from "../core/Footer";
 import AdminDashboardNav from "./AdminDashboardNav";
 
 const AdminDashboard = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Banner from "./Banner";
-import CategoryBanner from "./CategoryBanner";
+import CategoryBanner from "../Other Components/CategoryBanner";
 import ContactUs from "./ContactUs";
 import Footer from "./Footer";
 
