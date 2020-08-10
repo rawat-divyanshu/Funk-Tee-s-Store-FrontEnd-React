@@ -103,7 +103,7 @@ const CategoryBanner = () => {
       </section>
       <section class="text-gray-700 body-font">
         <h1 className="mb-4 md:mb-0 lg:mb-0 text-white text-3xl font-sansita ">
-          Recently Added T-Shirt's
+          Recently Added TShirt's
         </h1>
         <a
           href="#"

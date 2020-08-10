@@ -26,7 +26,7 @@ const Banner = () => {
               Explore Collections
             </button>
             <button class="ml-4 inline-flex text-black bg-white border-2 border-black py-2 px-6 focus:outline-none hover:bg-black hover:text-white rounded text-lg">
-              Explore T-Shirts
+              Explore TShirts
             </button>
           </div>
         </div>

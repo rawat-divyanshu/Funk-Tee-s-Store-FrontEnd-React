@@ -1,19 +1,17 @@
 import React from "react";
-import Navbar from "./Navbar";
 import Banner from "./Banner";
 import CategoryBanner from "../Other Components/CategoryBanner";
 import ContactUs from "./ContactUs";
-import Footer from "./Footer";
+import Base from "./Base";
+import "../tailwind.output.css";
 
 const Home = () => {
   return (
-    <React.Fragment>
-      <Navbar />
+    <Base>
       <Banner />
       <CategoryBanner />
       <ContactUs />
-      <Footer />
-    </React.Fragment>
+    </Base>
   );
 };
 
