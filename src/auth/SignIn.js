@@ -1,10 +1,79 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import Base from "./../core/Base";
+import { signin, authenticate, isAuthenticated } from "./helper";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import ReactLoading from "react-loading";
 
 const Signin = () => {
-  return (
-    <Base>
+  // State Declaration
+  const [values, setValues] = useState({
+    emailId: "",
+    password: "",
+    error: "",
+    loading: false,
+    didRedirect: false,
+  });
+
+  const { emailId, password, error, loading, didRedirect } = values;
+
+  const { user } = isAuthenticated();
+
+  const handleChange = (name) => (e) => {
+    setValues({ ...values, error: false, [name]: e.target.value });
+  };
+
+  const performRedirect = () => {
+    if (didRedirect || isAuthenticated()) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setValues({ ...values, error: false, loading: true });
+    signin({ emailId, password })
+      .then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          authenticate(data, () => {
+            setValues({ ...values, didRedirect: true });
+          });
+        }
+      })
+      .catch((err) => console.log("Signin Failed"));
+  };
+
+  const loadingComponent = () => {
+    if (loading) {
+      return (
+        <ReactLoading
+          type="spinningBubbles"
+          color="#ccc"
+          height={667}
+          width={375}
+        />
+      );
+    }
+  };
+
+  const errorToast = () => {
+    if (error) {
+      toast(error, {
+        position: "top-right",
+        type: "error",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+        transition: Bounce,
+      });
+    }
+  };
+
+  const signinForm = () => {
+    return (
       <div className="min-h-screen bg-white flex">
         <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm">
@@ -18,16 +87,15 @@ const Signin = () => {
               <div className="mt-6">
                 <form action="#" method="POST">
                   <div>
-                    <label
-                      for="email"
-                      className="block text-sm font-medium leading-5 text-gray-700"
-                    >
+                    <label className="block text-sm font-medium leading-5 text-gray-700">
                       Email address
                     </label>
                     <div className="mt-1 rounded-md shadow-sm">
                       <input
                         id="email"
                         type="email"
+                        onChange={handleChange("emailId")}
+                        value={emailId}
                         required
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                       />
@@ -35,16 +103,15 @@ const Signin = () => {
                   </div>
 
                   <div className="mt-6">
-                    <label
-                      for="password"
-                      className="block text-sm font-medium leading-5 text-gray-700"
-                    >
+                    <label className="block text-sm font-medium leading-5 text-gray-700">
                       Password
                     </label>
                     <div className="mt-1 rounded-md shadow-sm">
                       <input
                         id="password"
                         type="password"
+                        onChange={handleChange("password")}
+                        value={password}
                         required
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                       />
@@ -80,6 +147,7 @@ const Signin = () => {
                     <span className="block w-full rounded-md shadow-sm">
                       <button
                         type="submit"
+                        onClick={onSubmit}
                         className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:opacity-75 focus:outline-none focus:outline-none transition duration-150 ease-in-out"
                       >
                         Sign in
@@ -111,6 +179,15 @@ const Signin = () => {
           />
         </div>
       </div>
+    );
+  };
+  return (
+    <Base>
+      <ToastContainer />
+      {errorToast()}
+      {loadingComponent()}
+      {signinForm()}
+      {performRedirect()}
     </Base>
   );
 };

@@ -2,7 +2,7 @@ import { API } from "./../../backend";
 
 export const signup = (user) => {
   console.log(API);
-  return fetch(`${API}/signup`, {
+  return fetch(`https://ed8c6bfc4442.ngrok.io/api/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -17,7 +17,7 @@ export const signup = (user) => {
 };
 
 export const signin = (user) => {
-  return fetch(`${API}/signin`, {
+  return fetch(`https://ed8c6bfc4442.ngrok.io/api/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
