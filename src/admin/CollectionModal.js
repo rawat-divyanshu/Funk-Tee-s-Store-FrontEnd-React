@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { isAuthenticated } from "./../auth/helper/index";
 
 const CollectionModal = () => {
-  return (
-    <React.Fragment>
+  const [name, setName] = useState("initialState");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const { user, token } = isAuthenticated();
+
+  const collectionForm = () => {
+    return (
       <div className="container mx-auto">
         <form className="w-full flex flex-col items-center">
           <h1 className="text-3xl text-black text-center block font-sansita mb-8">
@@ -56,6 +65,42 @@ const CollectionModal = () => {
           </div>
         </form>
       </div>
+    );
+  };
+
+  const successToast = () => {
+    if (success) {
+      toast("Signup Successful. Login Now !", {
+        position: "top-right",
+        type: "dark",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+        transition: Bounce,
+      });
+    }
+  };
+
+  const errorToast = () => {
+    if (error) {
+      toast(error, {
+        position: "top-right",
+        type: "error",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+        transition: Bounce,
+      });
+    }
+  };
+  return (
+    <React.Fragment>
+      <ToastContainer position="top-right" />
+      {successToast()}
+      {errorToast()}
+      {collectionForm()}
     </React.Fragment>
   );
 };
